@@ -46,3 +46,20 @@ ie 2 - -3
 I think the key thing here is that there are two steps above.  First the check whether b is +ve or -ve then 
 the corresponding addition or subtraction of a and b
 
+Ex 1.5
+
+The key to answering this question is understanding (define (p) (p))
+
+This function evaluates to ... itself.  so it recursively keeps calling itself - so it never ends.
+
+Therefore, behaviour will be different for normal order and applicative order.
+
+With applicative order, the arguments are evaluated before the function body.  hence (test 0 (p)) will evaluate (p) before any of its body and hence be stuck in an endless loop.  So if the lisp interpreter you are using was using applicative order, the function would never return - and no output.
+
+If however, the intepreter used normal order, whereby we expand and apply then performing the necessary steps we get:
+
+1. (test 0 (p))
+2. (test (if ... etc) (p))
+     the if chooses the option with first zero which does not require y to be evaluated and so (p) is not required to be evaluated.  In which case the function would return zero.
+
+
