@@ -63,3 +63,21 @@ If however, the intepreter used normal order, whereby we expand and apply then p
      the if chooses the option with first zero which does not require y to be evaluated and so (p) is not required to be evaluated.  In which case the function would return zero.
 
 
+Ex 1.6
+
+If you read section 1.1.6 it says:
+
+"Conditional expressions are evaluated as follows. The predicate <p1> is evaluated first. If its value is false, then <p2> is evaluated. If <p2>'s value is also false, then <p3> is evaluated. This process continues until a predicate is found whose value is true, in which case the interpreter returns the value of the corresponding consequent expression <e> of the clause as the value of the conditional expression. If none of the <p>'s is found to be true, the value of the cond is undefined."
+
+The key thing here is that the predicate is evaluated and only if true is the expression evaluated.
+
+However, as we know from ex 1.5, the lisp interpreter uses applicative order. This means that ALL the parameters are evaluated BEFORE applying the function body.
+
+if does the right thing and first evaluates the guess and either returns guess or calls sqrt-iter.
+
+However, new-if is a function and so the parameters are supposed to be evaluated BEFORE the function body can be called.  
+
+if is a special form where applicative order is NOT used.  That is why lisp needs the if as a special form.
+
+
+
