@@ -87,5 +87,14 @@ However, new-if is a function and so the parameters are supposed to be evaluated
 
 if is a special form where applicative order is NOT used.  That is why lisp needs the if as a special form.
 
+Ex 1.7
 
+For calculating really small numbers, the choice of 1 as a starting point means that the guess will need to 
+converge down to the number.  The guess will have to drift down to the actual number then go lower.  It would 
+be better with numbers < 1 to start guess at x.
+
+The same logic will apply to really large numbers.  There will be a lot of guesses required to drift upwards 
+from 1 to the square root of a really large number.  The point was made in the question about precision. 
+I assume this means that for very large numbers the integer part of the number will require much of the 
+precision bits and so there will be less precision for the floating point part.
 
