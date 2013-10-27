@@ -123,3 +123,42 @@ I did jump ahead in the book and read about block structure and free variables. 
 if I hadn't read that.
 
 Results are more precise for small numbers.  I didn't notice any difference with large numbers.
+
+Ex 1.8:
+
+The exercises vary a lot in difficulty.  This was pretty straightforward, just work out the formula in lisp.
+
+This solution uses the block structure described in 1.1.8 page 30.
+
+(define (cuberoot x)
+  (define (cube a)
+    (* a a a))
+  (define (good-enough? guess x)
+    (< (abs (- (cube guess) x)) 0.001))
+  (define (improve guess x)
+    (/ (+ (/ x (* guess guess)) (* 2.0 guess)) 3.0)) 
+  (define (cuberoot-iter guess x)
+    (if (good-enough? guess x)
+        guess
+        (cuberoot-iter (improve guess x) x)))
+  (cuberoot-iter 1.0 x))
+  
+  This next solution uses the free variable concept also described in 1.1.8:
+  
+(define (cuberoot x)
+  (define (cube a)
+    (* a a a))
+  (define (good-enough? guess)
+    (< (abs (- (cube guess) x)) 0.001))
+  (define (improve guess)
+    (/ (+ (/ x (* guess guess)) (* 2.0 guess)) 3.0)) 
+  (define (cuberoot-iter guess)
+    (if (good-enough? guess)
+        guess
+        (cuberoot-iter (improve guess))))
+  (cuberoot-iter 1.0))
+  
+  See how x is defined in the outer cuberoot function as a formal parameter.  x is then accessible as a 
+  free variable to the nested functions.
+  
+  
