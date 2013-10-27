@@ -98,3 +98,25 @@ from 1 to the square root of a really large number.  The point was made in the q
 I assume this means that for very large numbers the integer part of the number will require much of the 
 precision bits and so there will be less precision for the floating point part.
 
+
+Next part of question is how to write a sqrt solution where good-enough? is changed to check the difference 
+between guesses.  I found the tricky part was in updating the old-guess.  I worked out that passing the 
+sqrt-iter old-guess param as new-guess works.  ie old-guess in new iteration will be previous new-guess!
+
+Here is my attempt:
+
+(define (sqrt2 x)
+  (define (small-change? guess previous-guess)
+    (< (abs (- guess previous-guess)) 0.001))
+  (define (improve guess)
+    (average guess (/ x guess)))
+  (define (sqrt-iter new-guess old-guess)
+    (if (small-change? new-guess old-guess)
+        new-guess
+        (sqrt-iter (improve new-guess) new-guess)))
+  (sqrt-iter 1.0 0.0))
+
+It was tricky because if you are used to imperative programming you could just create an old-guess variable 
+in a function and update it.  Functional programming doesn't seem to use the assignment to a variable much.
+
+Results are more precise for small numbers.  I didn't notice any difference with large numbers.
