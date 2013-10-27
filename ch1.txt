@@ -119,4 +119,7 @@ Here is my attempt:
 It was tricky because if you are used to imperative programming you could just create an old-guess variable 
 in a function and update it.  Functional programming doesn't seem to use the assignment to a variable much.
 
+I did jump ahead in the book and read about block structure and free variables.  So this code would be different 
+if I hadn't read that.
+
 Results are more precise for small numbers.  I didn't notice any difference with large numbers.
