@@ -362,7 +362,31 @@ add f(n-1) + 2f(n-2) + 3f(n-3) so we need three variables for that.  Plus a coun
       (fi-iter (+ a (* 2 b) (* 3 c)) a b (- count 1))))
 
 
+We already know from the results above that f(0) = 0, f(1)= 1, f(2) = 2 so we call fi-iter by using 
+these starting values, ie (fi-iter 2 1 0 n).
 
+Note how the 'history' is saved across function invocations.
+
+eg:
+
+(fi-iter 2 1 0 5)
+
+in body a = 2, b = 1, c = 0, n = 5
+
+When fi-iter is recursively called again the params become:
+
+(fi-iter 4 2 1 4)  
+
+the new a is the result using the a, b, c in (+ a (* 2 b) (* 3 c))
+the new b is the old a
+the new c is the old b
+count is decremented to 4
+
+Use the Racket debugger to step through each iteration.
+
+Then:
+(fi-iter 11 4 2 3)
+(fi-iter 25 11 4 2)
 
 
 
