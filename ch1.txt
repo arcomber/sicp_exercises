@@ -235,3 +235,135 @@ h(3) == 16    == 2^4   == 2^(2^(2^1))
 h(4) == 65536  == 2^16  == 2^(2^(2^(2^1)))
 
 No idea if that is answer!
+
+Ex 1.11
+
+In the recursive case there is additional 'hidden' information between recursive steps which must be maintained 
+by the interpreter. the longer the chain, the more info must be maintained.
+
+However, with the iterative example, the program variables maintain the state between recursive steps. 
+no 'hidden' info required and so as the number of iterations grow no 'extra' information must be maintained 
+by the interpreter.
+
+Obviously the iterative process solution is MUCH more scalable than the recursive process version.
+
+Writing the recursive process version is fairly easy and simply involves recoding the maths syntax into lisp as in:
+
+(define (f n)
+  (if (< n 3) n
+      (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))))
+
+The next part of the questino is to convert into an iterative solution.  This can be difficult at first.  so 
+to work up to a solution lets work on some simpler solutions to get the 'knack' of how to do it.  We 
+start by writing a recursive process solution, study it and then re-work as iterative.
+
+First lets try a factorial.
+
+(define (fact n)
+  (if (< n 2) 1
+    (* n (fact (- n 1)))))
+
+To change to iterative we add an accumulator for the result as a parameter.  you can think of this 
+accumulator as a variable in the program which removes the requirement for the interpreter to internally 
+hold this information.
+
+So iterative version.
+
+(define (facti n)
+  (define (f-iter n acc)
+    (if (< n 2) acc
+      (f-iter (- n 1) (* n acc))))
+    (f-iter n 1))
+
+Three notable changes as follows:
+A) nested inner iterative function.  This is really only to make the interface easier to call for users.  
+You wouldn't want to make users call the less convenient f-iter function directly.
+B) acc variable used as internal accumulator.  It is a running total of the favctorial.  ie factorial 5 
+will be 5 -> iteration 1, 20 -> iteration 2, 60 -> iteration 3, 120 -> iteration 4.
+C) terminating check return accumulator value.
+
+Programmers from an imperative background might notice that no 'mutable' variables are used.  acc takes 
+it place but is an immutable value which gets updated between calls.
+
+How exponentiation? ie x^n
+
+(define (exp b n)
+  (if (= n 0) 1
+    (* b (exp (- n 1)))))
+
+Iterative:
+
+(define (exp b n)
+  (define (e-iter b n acc)
+     (if (= n 0) acc
+        (exp b (- n 1) (* acc b))))
+  (e-iter b n 1))
+
+OK moving onto the slightly more complex - fibonacci:
+
+(define (fib n)
+   (if (< n 2) n
+     (+ (fib (- n 1)) (fib (- n 2))))) 
+
+Iterative:
+
+This one is trickier so lets look at some example iterations:
+ 
+fib(0) = 0
+fib(1) = 1
+fib(2) = fib(1) + fib(0) = 1 + 0 = 1
+fib(3) = fib(2) + fib(1) = 1 + 1 = 2
+fib(4) = fib(3) + fib(2) = 2 + 1 = 3
+fib(5) = fib(4) + fib(3) = 3 + 2 = 5
+
+If we calculate upwards towards n, if we are on fib(n) we need to keep track of fib(n-1) and (fib(n-2).  
+We can store that in an a and b variable.  But we will also need a counter to count up to n or actually 
+shown here counting down from n to zero.
+
+(define (fibi n)
+  (define (f-iter a b count)
+    (if (= count 0) b
+      (f-iter (+ a b) a (- count 1))))
+  (f-iter 1 0 n))
+ 
+This time we don't use an accumulator as such instead we save the previous two fib values as a and b.  
+We also need a counter so we know how many iterations to perform.
+
+Now lets see if we can tackle the book problem.
+
+f(n) = n if n < 3 and f(n) = f(n-1) + 2f(n-2) + 3f(n-3) if n >= 3
+
+;recursive solution
+(define (f n)
+  (if(< n 3) n
+     (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))))
+
+Results:
+f(1) = 1
+f(2) = 2
+f(3) = 4
+f(4) = 11
+f(5) = 25
+f(6) = 59
+f(7) = 142
+f(8) = 335
+f(9) = 796
+f(10) = 1892
+
+We can use the ideas from the fib example to save the history.  But this time, because we 
+add f(n-1) + 2f(n-2) + 3f(n-3) so we need three variables for that.  Plus a counter.
+
+(define (fi n)
+  (if (< n 3) n
+      (fi-iter 2 1 0 n)))
+
+(define (fi-iter a b c count)
+  (if (< count 3) a
+      (fi-iter (+ a (* 2 b) (* 3 c)) a b (- count 1))))
+
+
+
+
+
+
+
