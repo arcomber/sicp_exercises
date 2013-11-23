@@ -445,4 +445,16 @@ We can also hide fact inside pascal:
    (pasc row col))
 
 
+Ahh, just re-read question.  It says using a recursive process!  My factorial above uses an iterative process.  
+so to make the example above less efficient we can change to a simpler factorial function as in:
+
+(define (pascal3 row col)
+   (define (fact n)
+     (if (< n 2) 1
+       (* n (fact (- n 1)))))
+   (define (pasc r c)
+      (/ (fact r) (* (fact c) (fact (- r c)))))
+   (pasc row col))
+
+
 
