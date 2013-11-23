@@ -389,5 +389,60 @@ Then:
 (fi-iter 25 11 4 2)
 
 
+Ex 1.12 Pascal Triangle problem. Write a procedure that computes elements of Pascal's triangle by means of a recursive process.
+
+The first hurdle is to work out the function signature.  Well Pascal's triangle is made up of rows and columns so it would be logical to write the functions: (pascal row col)
+
+At first glance this problem looks tricky so first task is to research Pascal's triangle.  After a revision session on the maths, topics like binomial expansion, nCr, working out the chances of getting HHT, etc came back to me.
+
+For example, what are the chances of getting HHT when you throw a dice 3 times.  To work this out you can look at Pascals triangle at the row 1 3 3 1.  This row can be interpretted as:
+
+all heads, 1 head & 2 tails, 2 heads & 1 tail, all tails 
+
+all heads can only be 1 way :- HHH (same for all tails)
+
+But 1 head can be :- HTT, THT, TTH - 3 times.
+
+Note that this is row 3 if the first row is the 0th row.  
+
+0th row because:
+row 0 ->  1  -> (1+n)^0
+row 1 -> 1 1 -> (1+n)^1
+etc
+
+We can use the same cardinal numbering for columns.  ie col numbering will start from zero.
+
+In addition to using Pascal's triangle, you can also calculate the values using the nCr formula.  So one way to implement a solution is to use the nCr formula which is:
+
+nCr = n! / (r! (n-r)!)
+
+We already have a factorial function so we can use that.
+
+Here is the code:
+
+(define (fact n)
+  (define (fact-iter a cnt)
+    (if (= cnt 0)
+        a
+        (fact-iter (* a cnt) (dec cnt))))
+  (fact-iter 1 n))
+
+(define (pascal row col)
+  (/ (fact row) (* (fact col) (fact (- row col))))) 
+
+
+We can also hide fact inside pascal:
+
+(define (pascal2 row col)
+   (define (fact n)
+     (define (fact-iter a cnt)
+       (if (= cnt 0)
+           a
+           (fact-iter (* a cnt) (dec cnt))))
+     (fact-iter 1 n))  
+   (define (pasc r c)
+      (/ (fact r) (* (fact c) (fact (- r c)))))
+   (pasc row col))
+
 
 
