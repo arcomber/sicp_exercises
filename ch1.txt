@@ -182,7 +182,8 @@ Using substitution model for first + function:
 (inc 8)
  => 9
 
-The shape of this process is similar to figure 1.3 for the recursive factorial process.  ie there is a expansion followed by contraction.  This is a recursive process.
+The shape of this process is similar to figure 1.3 for the recursive factorial process.  ie there is a 
+expansion followed by contraction.  This is a recursive process.
 
 The 2nd form is a linear iterative process.  The substitution:
 
@@ -389,13 +390,18 @@ Then:
 (fi-iter 25 11 4 2)
 
 
-Ex 1.12 Pascal Triangle problem. Write a procedure that computes elements of Pascal's triangle by means of a recursive process.
+Ex 1.12 Pascal Triangle problem. Write a procedure that computes elements of Pascal's triangle by means of a 
+recursive process.
 
-The first hurdle is to work out the function signature.  Well Pascal's triangle is made up of rows and columns so it would be logical to write the functions: (pascal row col)
+The first hurdle is to work out the function signature.  Well Pascal's triangle is made up of rows and columns 
+so it would be logical to write the functions: (pascal row col)
 
-At first glance this problem looks tricky so first task is to research Pascal's triangle.  After a revision session on the maths, topics like binomial expansion, nCr, working out the chances of getting HHT, etc came back to me.
+At first glance this problem looks tricky so first task is to research Pascal's triangle.  After a revision 
+session on the maths, topics like binomial expansion, nCr, working out the chances of getting HHT, etc came 
+back to me.
 
-For example, what are the chances of getting HHT when you throw a dice 3 times.  To work this out you can look at Pascals triangle at the row 1 3 3 1.  This row can be interpretted as:
+For example, what are the chances of getting HHT when you throw a dice 3 times.  To work this out you can 
+look at Pascals triangle at the row 1 3 3 1.  This row can be interpretted as:
 
 all heads, 1 head & 2 tails, 2 heads & 1 tail, all tails 
 
@@ -412,7 +418,8 @@ etc
 
 We can use the same cardinal numbering for columns.  ie col numbering will start from zero.
 
-In addition to using Pascal's triangle, you can also calculate the values using the nCr formula.  So one way to implement a solution is to use the nCr formula which is:
+In addition to using Pascal's triangle, you can also calculate the values using the nCr formula.  So one 
+way to implement a solution is to use the nCr formula which is:
 
 nCr = n! / (r! (n-r)!)
 
